@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+<!doctype html>
 
-<html ng-app="SongApp">
+<html ng-app="audioApp">
+
 <head>
-    <title>Audiodio</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.0-beta.3/angular-ui-router.min.js"></script>
@@ -14,12 +14,16 @@
         <h1>Audiodio</h1>
         <nav>
             <a ui-sref="home">Home</a>
-            <a ui-sref="listOfSongs">Songs</a>
-            <a ui-sref="listOfFriends">Friends</a>
+            <a ui-sref="songs">Songs</a>
+            <a ui-sref="friends">Friends</a>
+            
+
         </nav>
     </header>
     <main>
         <ui-view></ui-view>
     </main>
+    
 </body>
+
 </html>

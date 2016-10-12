@@ -1,40 +1,40 @@
-let app = angular.module('SongApp', ['ui.router']);
+let app = angular.module('audioApp', ['ui.router']);
 
-app.factory("audioService", function () {
+app.factory("AudioService", function () {
     let songArray = [
-        { songTitle: 'AllStar', artistName: 'Smashmouth' },
-        { songTitle: 'Mastermind', artistName: 'DOOM' },
-        { songTitle: 'Feel Good Inc.', artistName: 'Gorillaz' },
-        { songTitle: 'Blame It On Me', artistName: 'George Ezra' },
+        { songTitle: 'AllStar', artistName: 'Smashmouth'},
+        { songTitle: 'Mastermind', artistName: 'DOOM'},
+        { songTitle: 'Feel Good Inc.', artistName: 'Gorillaz'},
+        { songTitle: 'Blame It On Me', artistName: 'George Ezra'},
     ];
 
     let friendArray = [
-        { friendName: "Dennis", songsLiked: 77 },
-        { friendName: "Dee", songsLiked: 32 },
-        { friendName: "Frank", songsLiked: 15 },
-        { friendName: "Charlie", songsLiked: 4 },
-        { friendName: "Mac", songsLiked: 3 },
+        { friendName: "Dennis", songsLiked: 77},
+        { friendName: "Dee", songsLiked: 32},
+        { friendName: "Frank", songsLiked: 15},
+        { friendName: "Charlie", songsLiked: 4},
+        { friendName: "Mac", songsLiked: 3},
     ];
 
     let userArray = ["Logan", "Wade Wilson", "Peter Parker"];
 
-    let kindArray = ["Spawn", "Deathstroke", "Magneto", "Dracula"];
+    let grandArray = ["Spawn", "Deathstroke", "Magneto", "Dracula"];
 
     return {
-        getSongs: function () {
+        getSongs: function() {
             return songArray;
         },
 
-        getFriends: function () {
+        getFriends: function() {
             return friendArray;
         },
 
-        getUser: function () {
+        getUser: function() {
             return userArray[Math.floor(Math.random() * userArray.length)];
         },
 
-        getKind: function () {
-            return kindArray[Math.floor(Math.random() * kindArray.length)];
+        getGrandson: function() {
+            return grandArray[Math.floor(Math.random() * grandArray.length)]; 
         }
     }
 });
@@ -49,13 +49,13 @@ app.config(function ($stateProvider) {
 
     $stateProvider.state({
         name: "listOfSongs",
-        url: '/songs',
+        url: 'components/songs',
         component: "songs",
     });
 
     $stateProvider.state({
         name: "listOfFriends",
-        url: "/friends",
+        url: "components/friends",
         component: "friends",
     })
 });
@@ -65,16 +65,11 @@ app.component('home', {
     controller: 'HomeController',
 });
 
-app.controller('HomeController', function ($scope, audioService) {
-    $scope.username = audioService.getUser();
-    $scope.grandson = audioService.getKind();
-    $scope.songs = audioService.getSongs();
-    $scope.friends = audioService.getFriends();
-    $scope.login = function (username, password) {
-        $scope.user = userInfo.login(username, password);
-        $scope.username = "";
-        $scope.password = "";
-    }
+app.controller('HomeController', function($scope, AudioService) {
+    $scope.username = AudioService.getUser();
+    $scope.grandson = AudioService.getGrandson();
+    $scope.songs = AudioService.getSongs();
+    $scope.friends = AudioService.getFriends();
 });
 
 app.component('songs', {
@@ -82,23 +77,21 @@ app.component('songs', {
     controller: 'SongListController',
 });
 
-// these actually are all good songs (and albums), by the way, 
-// in case you need something to listen to
-app.controller('SongListController', function ($scope, audioService) {
-    $scope.songs = audioService.getSongs();
+app.controller('SongListController', function($scope, AudioService) {
+    $scope.songs = AudioService.getSongs();
 });
 
-app.component('track', {
-    templateUrl: 'components/track.html',
+app.component('tune', {
+    templateUrl: 'components/tune.html',
     bindings: {
-        track: '<',
+        tune: '<',
     },
-    controller: 'trackController',
+    controller: 'TuneController',
 });
 
-app.controller('trackController', function ($scope) {
-    $scope.play = function (track) {
-        console.log('Playing ' + track.songTitle);
+app.controller('TuneController', function ($scope) {
+    $scope.play = function (tune) {
+        console.log('Playing ' + tune.songTitle);
     }
 });
 
@@ -107,29 +100,13 @@ app.component('friends', {
     controller: 'FriendController',
 });
 
-app.controller('FriendController', function ($scope, audioService) {
-    $scope.friends = audioService.getFriends();
+app.controller('FriendController', function($scope, AudioService) {
+    $scope.friends = AudioService.getFriends();
 });
 
-app.component('freund', {
-    templateUrl: 'components/freund.html',
+app.component('freunde', {
+    templateUrl: 'components/freunde.html',
     bindings: {
-        freund: '<',
+        freunde: '<',
     },
-});
-app.factory("userInfo", function () {
-    //variable has no meaning outside of this function
-    let userInfo = { username: null, password: null };
-    console.log(userInfo);
-    return {
-        login: function (username, password) {
-            userInfo.username = username;
-            userInfo.password = password;
-            return userInfo
-        },
-        getuserInfo(){
-            return userInfo
-        }
-
-    }
 });
